@@ -25,6 +25,8 @@ GLFWwindow *g_window = NULL;
 
 GLuint shader_programme;
 
+float posX = -0.1f, posY = -0.14f;
+
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void translate_item(float transf_x);
 
@@ -36,10 +38,10 @@ int main() {
 	// ------------------------------------------------------------------
 	float vertices[] = {
 		// positions          // colors           // texture0coords
-		0.1f,  -0.6f, 0.0f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // top right
-		0.1f, -0.9f, 0.0f,   0.0f, 1.0f, 0.0f,   0.0f, 1.0f, // bottom right
-		-0.1f, -0.9f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // bottom left
-		-0.1f,  -0.6f, 0.0f,   1.0f, 1.0f, 0.0f,   1.0f, 0.0f  // top left
+		0.1f,  -0.7f, 0.0f,   1.0f, 0.0f, 0.0f,   0.0f, 0.0f, // top right
+		0.1f, -0.98f, 0.0f,   0.0f, 1.0f, 0.0f,   0.0f, 1.0f, // bottom right
+		-0.1f, -0.98f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 1.0f, // bottom left
+		-0.1f,  -0.7f, 0.0f,   1.0f, 1.0f, 0.0f,   1.0f, 0.0f  // top left
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -100,7 +102,6 @@ int main() {
 		print_shader_info_log( fs );
 		return 1; // or exit or something
 	}
-
 	shader_programme = glCreateProgram();
 	glAttachShader( shader_programme, fs );
 	glAttachShader( shader_programme, vs );
@@ -149,35 +150,21 @@ int main() {
 
 	while ( !glfwWindowShouldClose( g_window ) ) {
 
-		// wipe the drawing surface clear
-
 		glfwSetKeyCallback(g_window, key_callback);
-		glfwPollEvents();
-		
+
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
 		glViewport(0, 0, g_gl_width, g_gl_height);
 
-		// bind Texture
 		glBindTexture(GL_TEXTURE_2D, texture);
-
-	
-		// Note: this call is not necessary, but I like to do it anyway before any
-		// time that I call glDrawArrays() so I never use the wrong shader programme
 		glUseProgram( shader_programme );
 
-		// Note	: this call is not necessary, but I like to do it anyway before any
-		// time that I call glDrawArrays() so I never use the wrong vertex data
 		glBindVertexArray( VAO );
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		// update other events like input handling
+		
 		glfwPollEvents();
-		if ( GLFW_PRESS == glfwGetKey( g_window, GLFW_KEY_ESCAPE ) ) {
-			glfwSetWindowShouldClose( g_window, 1 );
-		}
-		// put the stuff we've been drawing onto the display
-		glfwSwapBuffers( g_window );
+
+		glfwSwapBuffers(g_window);
 	}
 
 	// close GL context and any other GLFW resources
@@ -187,13 +174,26 @@ int main() {
 
 void key_callback(GLFWwindow * window, int key, int scancode, int action, int mode)
 {
-	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS) {
-		translate_item(-0.2f);
+	if (key == GLFW_KEY_LEFT && action != GLFW_RELEASE && posX >=-0.9f) {
+		posX -= 0.1f;
+		translate_item(posX);
 	}
 
-	else if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS) {
-		translate_item(0.2f);
+	else if (key == GLFW_KEY_RIGHT && action != GLFW_RELEASE && posX <= 0.9f) {
+		posX += 0.1f;
+		translate_item(posX);
 	}
+
+	else if (GLFW_PRESS == glfwGetKey(g_window, GLFW_KEY_ESCAPE)) {
+		glfwSetWindowShouldClose(g_window, 1);
+	}
+	
+	else if (key == GLFW_KEY_SPACE && action != GLFW_PRESS) {
+		
+		while (posY <= 1.1f) {
+			
+		}
+	};
 };
 
 void translate_item(float transf_x) {
