@@ -10,10 +10,15 @@ Adds index buffer (Element Array Buffer)
 #include <iostream>
 #include <sstream>
 #include <cmath>
+#include <cstdint>
 
 #include <utils/gl_utils.h> // parser for shader source files
 
-static int width = 800, height = 600;
+struct Buffer
+{
+    size_t width, height;
+    uint32_t* data;
+};
 
 // Function prototypes
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -29,7 +34,10 @@ void attachShadersToShaderProgram(GLuint vs, GLuint fs, GLuint shaderProgram);
 GLuint prepareShaderProgram(GLuint vs, GLuint fs, GLint &result, GLchar *infoLog);
 GLuint compileShader(const char *shader, GLuint resultShader);
 void drawVaoFromProgram(GLuint vao, GLuint shaderProgram);
+uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b);
+void buffer_clear(Buffer* buffer, uint32_t color);
 
+static int width = 800, height = 600;
 float x;
 float y;
 
@@ -64,6 +72,21 @@ int main() {
         std::cerr << "Failed to initialize GLEW" << std::endl;
         return 0;
     }
+
+    size_t buffer_width = 800;
+    size_t buffer_height = 600;
+
+    uint32_t clear_color = rgb_to_uint32(0, 128, 0);
+    Buffer buffer;
+    buffer.width  = buffer_width;
+    buffer.height = buffer_height;
+    buffer.data   = new uint32_t[buffer.width * buffer.height];
+    buffer_clear(&buffer, clear_color);
+
+    GLuint shader_id = 0;
+
+    GLint location = glGetUniformLocation(shader_id, "dbuffer");
+    glUniform1i(location, 0);
 
 
     GLfloat vertices[] = {
@@ -294,4 +317,17 @@ void showFPS(GLFWwindow *window) {
     }
 
     frameCount++;
+}
+
+uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b)
+{
+    return (r << 24) | (g << 16) | (b << 8) | 255;
+}
+
+void buffer_clear(Buffer* buffer, uint32_t color)
+{
+    for(size_t i = 0; i < buffer->width * buffer->height; ++i)
+    {
+        buffer->data[i] = color;
+    }
 }
