@@ -32,6 +32,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_subdirectory(utils)
 
-add_executable(uniform shaders_uniforms_callbacks.cpp)
+add_executable(uniform space_invaders.cpp utils)
 
 target_link_libraries(uniform utils glfw ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})
