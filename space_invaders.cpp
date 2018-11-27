@@ -48,7 +48,7 @@ int main() {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     #endif
 
-    g_window = glfwCreateWindow(width, height, "Hello Triangle Indexed", NULL, NULL);
+    g_window = glfwCreateWindow(width, height, "Space Invaders", NULL, NULL);
     if (!g_window) {
         glfwTerminate();
         return -1;
@@ -283,7 +283,7 @@ void showFPS(GLFWwindow *window) {
         std::ostringstream outs;
         outs.precision(3);    // decimal places
         outs << std::fixed
-             << "Hello Triangle Indexed" << "    "
+             << "Space Invaders" << "    "
              << "FPS: " << fps << "    "
              << "Frame Time: " << msPerFrame << " (ms)";
         glfwSetWindowTitle(window, outs.str().c_str());
