@@ -20,6 +20,32 @@ struct Buffer
     uint32_t* data;
 };
 
+struct Sprite
+{
+    size_t width, height;
+    uint8_t* data;
+};
+
+struct Alien
+{
+    size_t x, y;
+    uint8_t type;
+};
+
+struct Player
+{
+    size_t x, y;
+    size_t life;
+};
+
+struct Game
+{
+    size_t width, height;
+    size_t num_aliens;
+    Alien* aliens;
+    Player player;
+};
+
 // Function prototypes
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void reshape_callback(GLFWwindow *window, int width, int height);
@@ -36,6 +62,10 @@ GLuint compileShader(const char *shader, GLuint resultShader);
 void drawVaoFromProgram(GLuint vao, GLuint shaderProgram);
 uint32_t rgb_to_uint32(uint8_t r, uint8_t g, uint8_t b);
 void buffer_clear(Buffer* buffer, uint32_t color);
+void buffer_sprite_draw(
+        Buffer* buffer, const Sprite& sprite,
+        size_t x, size_t y, uint32_t color
+);
 
 static int width = 800, height = 600;
 float x;
@@ -83,7 +113,67 @@ int main() {
     buffer.data   = new uint32_t[buffer.width * buffer.height];
     buffer_clear(&buffer, clear_color);
 
-    GLuint shader_id = 0;
+    GLuint vao, buffer_texture;
+
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+    glEnableVertexAttribArray(0);
+
+    glGenTextures(1, &buffer_texture);
+    glBindTexture(GL_TEXTURE_2D, buffer_texture);
+    glTexImage2D(
+            GL_TEXTURE_2D, 0, GL_RGB8,
+            buffer.width, buffer.height, 0,
+            GL_RGBA, GL_UNSIGNED_INT_8_8_8_8, buffer.data
+    );
+
+    Sprite alien_sprite;
+    alien_sprite.width = 11;
+    alien_sprite.height = 8;
+    alien_sprite.data = new uint8_t[11 * 8]
+            {
+                    0,0,1,0,0,0,0,0,1,0,0, // ..@.....@..
+                    0,0,0,1,0,0,0,1,0,0,0, // ...@...@...
+                    0,0,1,1,1,1,1,1,1,0,0, // ..@@@@@@@..
+                    0,1,1,0,1,1,1,0,1,1,0, // .@@.@@@.@@.
+                    1,1,1,1,1,1,1,1,1,1,1, // @@@@@@@@@@@
+                    1,0,1,1,1,1,1,1,1,0,1, // @.@@@@@@@.@
+                    1,0,1,0,0,0,0,0,1,0,1, // @.@.....@.@
+                    0,0,0,1,1,0,1,1,0,0,0  // ...@@.@@...
+            };
+
+    buffer_sprite_draw(&buffer, alien_sprite,
+                       112, 128, rgb_to_uint32(128, 0, 0));
+
+    glTexSubImage2D(
+            GL_TEXTURE_2D, 0, 0, 0,
+            buffer.width, buffer.height,
+            GL_RGBA, GL_UNSIGNED_INT_8_8_8_8,
+            buffer.data
+    );
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    GLint result;
+    GLchar infoLog[512];
+
+    char vertex_shader[1024 * 256];
+    parse_file_into_str("../shaders/vs.glsl", vertex_shader, 1024 * 256);
+    GLuint vs = compileVertexShader(vertex_shader);
+    glGetShaderiv(vs, GL_COMPILE_STATUS, &result);
+    validateVertexShader(vs, result, infoLog);
+
+    char fragment_shader[1024 * 256];
+    parse_file_into_str("../shaders/fs.glsl", fragment_shader, 1024 * 256);
+    GLuint fs = compileFragmentShader(fragment_shader);
+    glGetShaderiv(fs, GL_COMPILE_STATUS, &result);
+    validateFragmentShader(fs,result,infoLog);
+
+    GLuint shader_id = prepareShaderProgram(vs, fs, result, infoLog);
 
     GLint location = glGetUniformLocation(shader_id, "dbuffer");
     glUniform1i(location, 0);
@@ -101,37 +191,17 @@ int main() {
             0, 2, 3  // Second Triangle
     };
 
+    GLuint vbo, ibo;
 
-    GLuint vbo_blue, ibo_blue, vao_blue;
-
-    glGenBuffers(1, &vbo_blue);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_blue);
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glGenVertexArrays(1, &vao_blue);
-    glBindVertexArray(vao_blue);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glEnableVertexAttribArray(0);
-
-    //
-    glGenBuffers(1, &ibo_blue);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_blue);
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_blue), indices_blue, GL_STATIC_DRAW);
 
-    GLint result;
-    GLchar infoLog[512];
 
-    char vertex_shader[1024 * 256];
-    parse_file_into_str("../shaders/vs_uniform.glsl", vertex_shader, 1024 * 256);
-    GLuint vs = compileVertexShader(vertex_shader);
-    glGetShaderiv(vs, GL_COMPILE_STATUS, &result);
-    validateVertexShader(vs, result, infoLog);
-
-    char fragment_shader[1024 * 256];
-    parse_file_into_str("../shaders/fs_uniform.glsl", fragment_shader, 1024 * 256);
-    GLuint fs = compileFragmentShader(fragment_shader);
-    glGetShaderiv(fs, GL_COMPILE_STATUS, &result);
-    validateFragmentShader(fs,result,infoLog);
     GLuint blueShaderProgram = prepareShaderProgram(vs, fs, result, infoLog);
     glDeleteShader(fs);
 
@@ -149,7 +219,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Render the quad (two triangles)
-        drawVaoFromProgram(vao_blue, blueShaderProgram);
+        drawVaoFromProgram(vao, blueShaderProgram);
 
         // Swap front and back buffers
         glfwSwapBuffers(g_window);
@@ -157,9 +227,9 @@ int main() {
 
     // Clean up
     glDeleteProgram(blueShaderProgram);
-    glDeleteVertexArrays(1, &vao_blue);
-    glDeleteBuffers(1, &vbo_blue);
-    glDeleteBuffers(1, &ibo_blue);
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ibo);
 
     glfwTerminate();
 
@@ -331,3 +401,23 @@ void buffer_clear(Buffer* buffer, uint32_t color)
         buffer->data[i] = color;
     }
 }
+
+void buffer_sprite_draw(
+        Buffer* buffer, const Sprite& sprite,
+        size_t x, size_t y, uint32_t color
+){
+    for(size_t xi = 0; xi < sprite.width; ++xi)
+    {
+        for(size_t yi = 0; yi < sprite.height; ++yi)
+        {
+            size_t sy = sprite.height - 1 + y - yi;
+            size_t sx = x + xi;
+            if(sprite.data[yi * sprite.width + xi] &&
+               sy < buffer->height && sx < buffer->width)
+            {
+                buffer->data[sy * buffer->width + sx] = color;
+            }
+        }
+    }
+}
+
