@@ -114,6 +114,7 @@ int main() {
 
     glDeleteShader(vs);
 
+    glClearColor(1.0, 0.0, 1.0, 1.0);
     // Rendering loop
     while (!glfwWindowShouldClose(g_window)) {
         showFPS(g_window);
