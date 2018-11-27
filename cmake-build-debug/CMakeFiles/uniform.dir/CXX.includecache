@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+..//utils/gl_utils.h
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+stdarg.h
+-
+
+/home/I863256/Documents/Unisinos/pg/uniform/shaders_uniforms_callbacks.cpp
+GL/glew.h
+-
+GLFW/glfw3.h
+-
+iostream
+-
+sstream
+-
+cmath
+-
+utils/gl_utils.h
+-
+

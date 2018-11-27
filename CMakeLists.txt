@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(SpaceInvaders)
+project(uniform)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,7 +12,6 @@ add_definitions(${GLUT_DEFINITIONS})
 if(NOT GLUT_FOUND)
     message(ERROR " GLUT not found!")
 endif(NOT GLUT_FOUND)
-
 
 #--- Find OpenGL
 find_package(OpenGL REQUIRED)
@@ -29,11 +28,10 @@ if (GLEW_FOUND)
     link_libraries(${GLEW_LIBRARIES})
 endif()
 
-include_directories(utils common/include)
-link_directories(utils common/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} "envaders/*.cpp")
-file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} "envaders/*.hpp")
+add_subdirectory(utils)
 
-add_executable(SpaceInvaders envaders/main.cpp common/include envaders utils ${HEADERS} ${SOURCES})
-target_link_libraries(SpaceInvaders glfw ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${GLEW_LIBRARY})
+add_executable(uniform shaders_uniforms_callbacks.cpp)
+
+target_link_libraries(uniform utils glfw ${OPENGL_LIBRARIES} ${GLUT_LIBRARY})

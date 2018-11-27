@@ -1,4 +1,24 @@
-GL_LOG_FILE log. local time Tue Nov 27 16:45:52 2018
+GL_LOG_FILE log. local time Fri Sep 28 22:33:31 2018
 
 starting GLFW 3.1.2 X11 GLX clock_gettime /dev/js XI Xf86vm sharedrenderer: Mesa DRI Intel(R) HD Graphics 520 (Skylake GT2) 
 version: 4.5 (Core Profile) Mesa 18.3.0-devel
+ERROR: opening file for reading: test_vs.glsl
+ERROR: opening file for reading: test_fs.glsl
+ERROR: opening file for reading: shaders/test_vs.glsl
+ERROR: opening file for reading: shaders/test_fs.glsl
+ERROR: opening file for reading: vs.glsl
+ERROR: opening file for reading: fs.glsl
+ERROR: opening file for reading: shaders/vs.glsl
+ERROR: opening file for reading: shaders/fs.glsl
+ERROR: opening file for reading: vs.glsl
+ERROR: opening file for reading: fs.glsl
+ERROR: opening file for reading: core.vs
+ERROR: opening file for reading: core.frag
+ERROR: opening file for reading: core.vs
+ERROR: opening file for reading: core.frag
+ERROR: opening file for reading: corevs.frag
+ERROR: opening file for reading: corefs.frag
+ERROR: opening file for reading: corevs.frag
+ERROR: opening file for reading: corefs.frag
+ERROR: opening file for reading: vs.glsl
+ERROR: opening file for reading: fs.glsl

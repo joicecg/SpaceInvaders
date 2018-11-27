@@ -1,0 +1,2 @@
+/usr/bin/ar qc libutils.a  CMakeFiles/utils.dir/gl_utils.cpp.o CMakeFiles/utils.dir/maths_funcs.cpp.o
+/usr/bin/ranlib libutils.a

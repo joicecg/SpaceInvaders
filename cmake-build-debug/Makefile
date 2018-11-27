@@ -48,10 +48,10 @@ RM = /opt/clion/bin/cmake/linux/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/I863256/Documents/Unisinos/pg/SpaceInvaders
+CMAKE_SOURCE_DIR = /home/I863256/Documents/Unisinos/pg/uniform
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug
+CMAKE_BINARY_DIR = /home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles /home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles /home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,98 +111,57 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named SpaceInvaders
+# Target rules for targets named uniform
 
 # Build rule for target.
-SpaceInvaders: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 SpaceInvaders
-.PHONY : SpaceInvaders
+uniform: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 uniform
+.PHONY : uniform
 
 # fast build rule for target.
-SpaceInvaders/fast:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/build
-.PHONY : SpaceInvaders/fast
+uniform/fast:
+	$(MAKE) -f CMakeFiles/uniform.dir/build.make CMakeFiles/uniform.dir/build
+.PHONY : uniform/fast
 
-envaders/gl_utils.o: envaders/gl_utils.cpp.o
+#=============================================================================
+# Target rules for targets named utils
 
-.PHONY : envaders/gl_utils.o
+# Build rule for target.
+utils: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 utils
+.PHONY : utils
 
-# target to build an object file
-envaders/gl_utils.cpp.o:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/gl_utils.cpp.o
-.PHONY : envaders/gl_utils.cpp.o
+# fast build rule for target.
+utils/fast:
+	$(MAKE) -f utils/CMakeFiles/utils.dir/build.make utils/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
 
-envaders/gl_utils.i: envaders/gl_utils.cpp.i
+shaders_uniforms_callbacks.o: shaders_uniforms_callbacks.cpp.o
 
-.PHONY : envaders/gl_utils.i
-
-# target to preprocess a source file
-envaders/gl_utils.cpp.i:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/gl_utils.cpp.i
-.PHONY : envaders/gl_utils.cpp.i
-
-envaders/gl_utils.s: envaders/gl_utils.cpp.s
-
-.PHONY : envaders/gl_utils.s
-
-# target to generate assembly for a file
-envaders/gl_utils.cpp.s:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/gl_utils.cpp.s
-.PHONY : envaders/gl_utils.cpp.s
-
-envaders/main.o: envaders/main.cpp.o
-
-.PHONY : envaders/main.o
+.PHONY : shaders_uniforms_callbacks.o
 
 # target to build an object file
-envaders/main.cpp.o:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/main.cpp.o
-.PHONY : envaders/main.cpp.o
+shaders_uniforms_callbacks.cpp.o:
+	$(MAKE) -f CMakeFiles/uniform.dir/build.make CMakeFiles/uniform.dir/shaders_uniforms_callbacks.cpp.o
+.PHONY : shaders_uniforms_callbacks.cpp.o
 
-envaders/main.i: envaders/main.cpp.i
+shaders_uniforms_callbacks.i: shaders_uniforms_callbacks.cpp.i
 
-.PHONY : envaders/main.i
-
-# target to preprocess a source file
-envaders/main.cpp.i:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/main.cpp.i
-.PHONY : envaders/main.cpp.i
-
-envaders/main.s: envaders/main.cpp.s
-
-.PHONY : envaders/main.s
-
-# target to generate assembly for a file
-envaders/main.cpp.s:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/main.cpp.s
-.PHONY : envaders/main.cpp.s
-
-envaders/maths_funcs.o: envaders/maths_funcs.cpp.o
-
-.PHONY : envaders/maths_funcs.o
-
-# target to build an object file
-envaders/maths_funcs.cpp.o:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/maths_funcs.cpp.o
-.PHONY : envaders/maths_funcs.cpp.o
-
-envaders/maths_funcs.i: envaders/maths_funcs.cpp.i
-
-.PHONY : envaders/maths_funcs.i
+.PHONY : shaders_uniforms_callbacks.i
 
 # target to preprocess a source file
-envaders/maths_funcs.cpp.i:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/maths_funcs.cpp.i
-.PHONY : envaders/maths_funcs.cpp.i
+shaders_uniforms_callbacks.cpp.i:
+	$(MAKE) -f CMakeFiles/uniform.dir/build.make CMakeFiles/uniform.dir/shaders_uniforms_callbacks.cpp.i
+.PHONY : shaders_uniforms_callbacks.cpp.i
 
-envaders/maths_funcs.s: envaders/maths_funcs.cpp.s
+shaders_uniforms_callbacks.s: shaders_uniforms_callbacks.cpp.s
 
-.PHONY : envaders/maths_funcs.s
+.PHONY : shaders_uniforms_callbacks.s
 
 # target to generate assembly for a file
-envaders/maths_funcs.cpp.s:
-	$(MAKE) -f CMakeFiles/SpaceInvaders.dir/build.make CMakeFiles/SpaceInvaders.dir/envaders/maths_funcs.cpp.s
-.PHONY : envaders/maths_funcs.cpp.s
+shaders_uniforms_callbacks.cpp.s:
+	$(MAKE) -f CMakeFiles/uniform.dir/build.make CMakeFiles/uniform.dir/shaders_uniforms_callbacks.cpp.s
+.PHONY : shaders_uniforms_callbacks.cpp.s
 
 # Help Target
 help:
@@ -212,16 +171,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... SpaceInvaders"
-	@echo "... envaders/gl_utils.o"
-	@echo "... envaders/gl_utils.i"
-	@echo "... envaders/gl_utils.s"
-	@echo "... envaders/main.o"
-	@echo "... envaders/main.i"
-	@echo "... envaders/main.s"
-	@echo "... envaders/maths_funcs.o"
-	@echo "... envaders/maths_funcs.i"
-	@echo "... envaders/maths_funcs.s"
+	@echo "... uniform"
+	@echo "... utils"
+	@echo "... shaders_uniforms_callbacks.o"
+	@echo "... shaders_uniforms_callbacks.i"
+	@echo "... shaders_uniforms_callbacks.s"
 .PHONY : help
 
 

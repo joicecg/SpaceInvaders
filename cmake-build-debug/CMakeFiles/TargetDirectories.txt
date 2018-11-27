@@ -1,3 +1,6 @@
-/home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/I863256/Documents/Unisinos/pg/SpaceInvaders/cmake-build-debug/CMakeFiles/SpaceInvaders.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/CMakeFiles/uniform.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/utils/CMakeFiles/edit_cache.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/utils/CMakeFiles/rebuild_cache.dir
+/home/I863256/Documents/Unisinos/pg/uniform/cmake-build-debug/utils/CMakeFiles/utils.dir
