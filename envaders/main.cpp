@@ -73,8 +73,8 @@ int main() {
 
 	char vertex_shader[1024 * 256];
 	char fragment_shader[1024 * 256];
-	parse_file_into_str( "test_vs.glsl", vertex_shader, 1024 * 256 );
-	parse_file_into_str( "test_fs.glsl", fragment_shader, 1024 * 256 );
+	parse_file_into_str( "../envaders/test_vs.glsl", vertex_shader, 1024 * 256 );
+	parse_file_into_str( "../envaders/test_fs.glsl", fragment_shader, 1024 * 256 );
 
 	GLuint vs = glCreateShader( GL_VERTEX_SHADER );
 	const GLchar *p = (const GLchar *)vertex_shader;

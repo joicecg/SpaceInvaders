@@ -81,7 +81,7 @@ bool start_gl(const char *title) {
 
 /* We must specify 3.2 core if on Apple OS X -- other O/S can specify
  anything here. I defined 'APPLE' in the makefile for OS X */
-#ifdef APPLE
+#ifdef __linux__
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 4 );
 	glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 1 );
 	glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
